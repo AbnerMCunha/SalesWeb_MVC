@@ -172,7 +172,7 @@ namespace SalesWebMVC.Controllers {
             var viewModel = new ErrorViewModel
             {
                 Message = Message,
-                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier //Macete Pra pegar o Id Interno da Requisição.
             };
             return View(viewModel);
         }
