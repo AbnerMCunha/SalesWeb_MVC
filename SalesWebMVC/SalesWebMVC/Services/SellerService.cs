@@ -48,13 +48,12 @@ namespace SalesWebMVC.Services {
             {
                 throw new Exceptions.DbConcurrencyException("Id Seller not found. ");
             }
-
             try
             {
                 _context.Update(seller);
                 _context.SaveChanges();
             }
-            catch(ApplicationException e)
+            catch(DbUpdateConcurrencyException e)   //IMPORTANTE SEGREGRAR CAMADAS: Interceptando excel do nivel de acesso a dados e relançando a minha exceçao de Nivel de Servico.
             {
                 throw new DbConcurrencyException(e.Message);
             }

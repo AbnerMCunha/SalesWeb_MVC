@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Diagnostics;   //para pegar id generico
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,13 +54,15 @@ namespace SalesWebMVC.Controllers {
         {
             if (id == null)
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { Message = "Id not provided" });
             }
 
             var obj = _sellerService.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { Message = "Id not Found!" });
             }
 
             //_sellerService.RemoveSeller(id.Value);        //Errei aqui, cuidado ao passar Ação, no Metodo Get, ação só no metodos Post, (verificar)
@@ -82,13 +85,15 @@ namespace SalesWebMVC.Controllers {
         {
             if (id == null)
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { Message = "Id not provided" });
             }
 
             var obj = _sellerService.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { Message = "Id not Found" });
             }
 
             return View(obj);
@@ -102,13 +107,15 @@ namespace SalesWebMVC.Controllers {
         {
             if (id == null)
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { Message = "Id not provided" });
             }
 
             var obj = _sellerService.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                //return NotFound();
+                return RedirectToAction(nameof(Error), new { Message = "Id not Found" });
             }
 
             List<Department> departments = new List<Department>(_departmentService.FindAll());
@@ -123,21 +130,51 @@ namespace SalesWebMVC.Controllers {
         {
             if (id != seller.Id)
             {
-                BadRequest();
+                //BadRequest();
+                return RedirectToAction(nameof(Error), new { Message = "Id Mismatch" });
             }
             try
             {
                 _sellerService.Update(seller);
                 return RedirectToAction(nameof(Index));
-            }catch(NotFoundException e)
+            }
+            catch (ApplicationException e)   //ApplicationException  é Superclase de NotFoundException e DbConcurrencyException, por upcasting acaba representando as 2
+            {
+                return RedirectToAction(nameof(Error), e.Message);  //Posso usar a mensagem da exceção retornda
+            }
+            /* ApplicationException  é Superclase de NotFoundException e DbConcurrencyException, por upcasting acaba representando as 2
+              
+              catch(NotFoundException e) //Caso retorne na Camada de Servico essa excção, retonar excção personalizada no Controler
             {
                 return NotFound();
             }
-            catch(DbConcurrencyException e)
+            catch(DbConcurrencyException e) //Caso retorne na Camada de Servico essa excção, retonar excção personalizada no Controler
             {
                 return BadRequest();
             }
+            */
         }
+        /*
+        public IActionResult Error( string message)
+        {
+            var errorViewModel = new ErrorViewModel()
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                //? significa que é opcional
+                //?? Operador de coalescencia nulla
+            };
+            return View(errorViewModel);
+        }*/
 
+        public IActionResult Error(string Message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = Message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
+        }
     }
 }
