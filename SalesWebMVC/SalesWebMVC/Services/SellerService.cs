@@ -27,6 +27,7 @@ namespace SalesWebMVC.Services {
             //obj.Department = _context.Department.First();    //Gamibarra pra poder inserir Vendedor com primeiro departamento registrado, caso contrario, da erro.
             _context.Add(obj);
             _context.SaveChanges();
+
         }
 
         public Seller FindById(int id)
