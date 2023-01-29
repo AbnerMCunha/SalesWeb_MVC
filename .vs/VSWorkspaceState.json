@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\SalesWebMVC",
+    "\\SalesWebMVC\\SalesWebMVC",
+    "\\SalesWebMVC\\SalesWebMVC\\bin",
+    "\\SalesWebMVC\\SalesWebMVC\\Controllers",
+    "\\SalesWebMVC\\SalesWebMVC\\Data",
+    "\\SalesWebMVC\\SalesWebMVC\\Migrations",
+    "\\SalesWebMVC\\SalesWebMVC\\Models",
+    "\\SalesWebMVC\\SalesWebMVC\\Services",
+    "\\SalesWebMVC\\SalesWebMVC\\Services\\Exceptions"
+  ],
+  "SelectedNode": "\\SalesWebMVC\\SalesWebMVC.sln",
+  "PreviewInSolutionExplorer": false
+}
