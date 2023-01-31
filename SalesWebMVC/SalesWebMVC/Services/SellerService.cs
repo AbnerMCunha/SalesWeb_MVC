@@ -36,9 +36,15 @@ namespace SalesWebMVC.Services {
 
         public async Task RemoveSellerAsync(int id)
         {
-            var obj = await _context.Seller.FindAsync(id);
-            _context.Seller.Remove(obj);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var obj = await _context.Seller.FindAsync(id);
+                _context.Seller.Remove(obj);
+                await _context.SaveChangesAsync();
+            }catch(DbUpdateException e)    //Exceção de Integridade Referencial
+            {
+                throw new IntegrityException("Can't delete seller because there are linked sales");    //Tratar especialmente essa exceção
+            }
         }
 
 

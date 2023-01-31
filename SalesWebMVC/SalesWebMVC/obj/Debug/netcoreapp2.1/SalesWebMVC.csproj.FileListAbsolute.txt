@@ -91,3 +91,4 @@ C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SalesWebMVC2\SalesWebMVC\Sale
 C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SalesWebMVC2\SalesWebMVC\SalesWebMVC\obj\Debug\netcoreapp2.1\SalesWebMVC.genruntimeconfig.cache
 C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SalesWebMVC2\SalesWebMVC\SalesWebMVC\obj\Debug\netcoreapp2.1\SalesWebMVC.csproj.CopyComplete
 C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SalesWebMVC2\SalesWebMVC\SalesWebMVC\obj\Debug\netcoreapp2.1\Razor\Views\Sellers\Edit.cshtml.g.cs
+C:\Abner\UDEMY\Secao18-SalesWebMvc-EntityFramework\SalesWebMVC2\SalesWebMVC\SalesWebMVC\obj\Debug\netcoreapp2.1\Razor\Views\Shared\ErrorIntegrityDepatment.cshtml.g.cs

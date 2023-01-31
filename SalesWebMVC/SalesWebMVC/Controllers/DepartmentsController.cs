@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMVC.Data;
 using SalesWebMVC.Models;
+using SalesWebMVC.Models.ViewModels;
+using SalesWebMVC.Services.Exceptions;
 
 namespace SalesWebMVC.Controllers
 {
@@ -134,20 +136,41 @@ namespace SalesWebMVC.Controllers
             return View(department);
         }
 
+
         // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var department = await _context.Department.FindAsync(id);
-            _context.Department.Remove(department);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var department = await _context.Department.FindAsync(id);
+                _context.Department.Remove(department);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (IntegrityException e)    //Retornado do SellerService pelo tratamento de Exceção de Integridade Referencial
+            {
+                return RedirectToAction(nameof(ErrorIntegrityDepartment), "Can't delete seller because there are linked sales" );
+            }
         }
+
+        public IActionResult ErrorIntegrityDepartment(string Message)
+        {
+            var errorViewModel = new ErrorIGeneric
+            {
+                Message = Message
+            };
+            return View(errorViewModel);
+        }
+
 
         private bool DepartmentExists(int id)
         {
             return _context.Department.Any(e => e.Id == id);
         }
+
+
+
     }
 }

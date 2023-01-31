@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;    //Para o Tratamento de Erros
+using SalesWebMVC.Services.Exceptions;
 
 namespace SalesWebMVC.Models {
     public class Department {
@@ -20,9 +22,16 @@ namespace SalesWebMVC.Models {
         {
             Sellers.Add(seller);
         }
+
         public void RemoveSeller(Seller seller)
         {
+            try { 
             Sellers.Remove(seller);
+            }
+            catch (DbUpdateException)
+            {
+                throw new IntegrityException("Can't Delete Departament because it has Sellers with sales linked.");
+            }
         }
 
         public double TotalSales(DateTime Initial, DateTime Final)
