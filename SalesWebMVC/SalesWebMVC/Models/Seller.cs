@@ -7,6 +7,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SalesWebMVC.Models {
     public class Seller {
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(60,MinimumLength = 1, ErrorMessage = "Name Siz should be between 1 and 60!")]
         public string Name { get; set; }
 
         [DataType(DataType.EmailAddress)]
