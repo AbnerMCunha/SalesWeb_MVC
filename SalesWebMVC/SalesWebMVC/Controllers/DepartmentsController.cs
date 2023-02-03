@@ -142,17 +142,17 @@ namespace SalesWebMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
+            //try
+            //{
                 var department = await _context.Department.FindAsync(id);
                 _context.Department.Remove(department);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            catch (IntegrityException e)    //Retornado do SellerService pelo tratamento de Exceção de Integridade Referencial
-            {
-                return RedirectToAction(nameof(ErrorIntegrityDepartment), "Can't delete seller because there are linked sales" );
-            }
+            //}
+            //catch (IntegrityException e)    //Retornado do SellerService pelo tratamento de Exceção de Integridade Referencial
+            //{
+            //    return RedirectToAction(nameof(ErrorIntegrityDepartment), "Can't delete seller because there are linked sales" );
+            //}
         }
 
         public IActionResult ErrorIntegrityDepartment(string Message)
